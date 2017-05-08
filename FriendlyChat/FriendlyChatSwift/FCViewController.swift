@@ -256,10 +256,11 @@ extension FCViewController: UITableViewDelegate, UITableViewDataSource {
         let messageSnapshot: FIRDataSnapshot! = messages[indexPath.row]
         let message = messageSnapshot.value as! [String:String]
         let name = message[Constants.MessageFields.name] ?? "[username]"
-        let text = message[Constants.MessageFields.text] ?? "[message]"
         
-        cell.textLabel?.text = name + ": " + text
-        cell.imageView?.image = self.placeholderImage
+        // if photo message, then
+        if let imageUrl = message[Constants.MessageFields.imageUrl]{
+            cell.textLabel?.text = "Sent by :\(name)"
+        }
         
         return cell!
         
